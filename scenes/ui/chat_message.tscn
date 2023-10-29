@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://by7yryqqq1sv"]
+
+[node name="ChatMessage" type="RichTextLabel"]
+bbcode_enabled = true
+fit_content = true
+scroll_active = false

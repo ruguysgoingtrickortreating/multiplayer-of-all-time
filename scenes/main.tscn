@@ -1,0 +1,106 @@
+[gd_scene load_steps=11 format=3 uid="uid://dtfa1q1whsnee"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_hxc4f"]
+[ext_resource type="PackedScene" uid="uid://dqqxfj3ilgcr1" path="res://scenes/player.tscn" id="1_xnksl"]
+[ext_resource type="PackedScene" uid="uid://d11of5phfrwri" path="res://scenes/ui/hud.tscn" id="3_3a0ey"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yae5s"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_45uhc"]
+sky_material = SubResource("ProceduralSkyMaterial_yae5s")
+
+[sub_resource type="Environment" id="Environment_6e3uy"]
+background_mode = 2
+sky = SubResource("Sky_45uhc")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1lu63"]
+albedo_color = Color(0.45098, 0.45098, 0.45098, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_luvdc"]
+albedo_color = Color(0.12549, 0.611765, 0.0470588, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ux54"]
+albedo_color = Color(0.611765, 0.0470588, 0.0470588, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4cpoq"]
+albedo_color = Color(0.0666667, 0.0470588, 0.611765, 1)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_hxc4f")
+player_scene = ExtResource("1_xnksl")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6e3uy")
+
+[node name="EnvironmentObjects" type="Node3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="EnvironmentObjects"]
+transform = Transform3D(3.99439, 0, 0, 0, -0.1, 0, 0, 0, 4, 0, 0, 0)
+use_collision = true
+size = Vector3(8, 0, 8)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="EnvironmentObjects"]
+transform = Transform3D(1.8, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 0)
+use_collision = true
+size = Vector3(1, 14, 34)
+material = SubResource("StandardMaterial3D_1lu63")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="EnvironmentObjects"]
+transform = Transform3D(1.8, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, 0)
+use_collision = true
+size = Vector3(1, 14, 34)
+material = SubResource("StandardMaterial3D_1lu63")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="EnvironmentObjects"]
+transform = Transform3D(-7.86805e-08, 0, -1, 0, 1, 0, 1.8, 0, -4.37114e-08, -7.43094e-07, 0, 17)
+use_collision = true
+size = Vector3(1, 14, 34)
+material = SubResource("StandardMaterial3D_1lu63")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="EnvironmentObjects"]
+transform = Transform3D(-7.86805e-08, 0, -1, 0, 1, 0, 1.8, 0, -4.37114e-08, 7.43094e-07, 0, -17)
+use_collision = true
+size = Vector3(1, 14, 34)
+material = SubResource("StandardMaterial3D_1lu63")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="EnvironmentObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 6)
+use_collision = true
+size = Vector3(4, 2, 4)
+material = SubResource("StandardMaterial3D_luvdc")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="EnvironmentObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+use_collision = true
+size = Vector3(4, 4, 4)
+material = SubResource("StandardMaterial3D_4ux54")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="EnvironmentObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1, -6)
+use_collision = true
+size = Vector3(4, 4, 4)
+material = SubResource("StandardMaterial3D_4cpoq")
+
+[node name="SpawnLocations" type="Node3D" parent="."]
+
+[node name="1" type="Node3D" parent="SpawnLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.8, 0)
+
+[node name="2" type="Node3D" parent="SpawnLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.8, -2)
+
+[node name="3" type="Node3D" parent="SpawnLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.8, 2)
+
+[node name="4" type="Node3D" parent="SpawnLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.8, -3)
+
+[node name="HUD" parent="." instance=ExtResource("3_3a0ey")]

@@ -1,0 +1,121 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3t1xu4h5yue"]
+
+[ext_resource type="Script" path="res://MultiplayerController.gd" id="1_pmxeu"]
+
+[node name="MultiplayerMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pmxeu")
+
+[node name="HostButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 314.0
+offset_right = 373.0
+offset_bottom = 414.0
+text = "host game"
+
+[node name="JoinButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 780.0
+offset_top = 314.0
+offset_right = 1080.0
+offset_bottom = 414.0
+text = "join game"
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 429.0
+offset_top = 317.0
+offset_right = 729.0
+offset_bottom = 417.0
+text = "start game in singleplayer
+"
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 50
+text = "multiplayer of all time"
+
+[node name="UsernameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 233.0
+offset_right = 256.0
+offset_bottom = 256.0
+text = "username"
+
+[node name="IpLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 436.0
+offset_top = 237.0
+offset_right = 607.0
+offset_bottom = 260.0
+text = "ip address
+"
+
+[node name="PortLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 784.0
+offset_top = 235.0
+offset_right = 955.0
+offset_bottom = 258.0
+text = "port
+"
+
+[node name="WaitingForHostLabel" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 238.0
+offset_top = 325.0
+offset_right = 959.0
+offset_bottom = 394.0
+theme_override_font_sizes/font_size = 50
+text = "waiting for host to start game"
+
+[node name="ErrorLog" type="Label" parent="."]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 432.0
+offset_right = 1078.0
+offset_bottom = 568.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="UsernameTextbox" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 261.0
+offset_right = 369.0
+offset_bottom = 292.0
+placeholder_text = "robert"
+
+[node name="IpTextbox" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 434.0
+offset_top = 261.0
+offset_right = 718.0
+offset_bottom = 292.0
+placeholder_text = "127.0.0.1"
+
+[node name="PortTextbox" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 782.0
+offset_top = 260.0
+offset_right = 1066.0
+offset_bottom = 291.0
+placeholder_text = "12345"
+
+[connection signal="pressed" from="HostButton" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="JoinButton" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="StartButton" to="." method="_on_start_game_pressed"]
+[connection signal="text_changed" from="IpTextbox" to="." method="_on_ip_textbox_text_changed"]
+[connection signal="text_changed" from="PortTextbox" to="." method="_on_port_textbox_text_changed"]

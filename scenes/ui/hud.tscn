@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://d11of5phfrwri"]
+
+[ext_resource type="Script" path="res://scenes/ui/tab_handler.gd" id="1_n1qi4"]
+[ext_resource type="PackedScene" uid="uid://270h7ydeknd" path="res://scenes/ui/chat_box.tscn" id="1_rv0xj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yfy25"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5sxbn"]
+content_margin_left = 7.0
+content_margin_right = 7.0
+bg_color = Color(0.180392, 0.180392, 0.180392, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_color = Color(0.180392, 0.180392, 0.180392, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+
+[sub_resource type="Theme" id="Theme_k5xkr"]
+TabContainer/constants/side_margin = 0
+TabContainer/styles/panel = SubResource("StyleBoxEmpty_yfy25")
+TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_5sxbn")
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="TabBar" type="TabContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_k5xkr")
+clip_tabs = false
+script = ExtResource("1_n1qi4")
+
+[node name="Chat" parent="TabBar" instance=ExtResource("1_rv0xj")]
+custom_minimum_size = Vector2(400, 250)
+layout_mode = 2
+
+[connection signal="tab_clicked" from="TabBar" to="TabBar" method="_on_tab_clicked"]

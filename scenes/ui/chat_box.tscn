@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://270h7ydeknd"]
+
+[ext_resource type="Script" path="res://scenes/ui/chat_manager.gd" id="1_qthua"]
+[ext_resource type="PackedScene" uid="uid://by7yryqqq1sv" path="res://scenes/ui/chat_message.tscn" id="2_ktr11"]
+
+[node name="ChatBox" type="PanelContainer"]
+offset_right = 400.0
+offset_bottom = 250.0
+script = ExtResource("1_qthua")
+message_scene = ExtResource("2_ktr11")
+
+[node name="ChatBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 2
+
+[node name="ChatMsgScroll" type="ScrollContainer" parent="ChatBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ChatMsgContainer" type="VBoxContainer" parent="ChatBoxContainer/ChatMsgScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 4
+alignment = 2
+
+[node name="ChatMessage" parent="ChatBoxContainer/ChatMsgScroll/ChatMsgContainer" instance=ExtResource("2_ktr11")]
+layout_mode = 2
+
+[node name="ChatMessage2" parent="ChatBoxContainer/ChatMsgScroll/ChatMsgContainer" instance=ExtResource("2_ktr11")]
+layout_mode = 2
+
+[node name="ChatMessage3" parent="ChatBoxContainer/ChatMsgScroll/ChatMsgContainer" instance=ExtResource("2_ktr11")]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="ChatBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+placeholder_text = "press / or click to start typing..."
+
+[connection signal="text_submitted" from="ChatBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]
