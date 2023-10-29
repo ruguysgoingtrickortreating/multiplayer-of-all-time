@@ -23,6 +23,11 @@ GameManager="*res://GameManager.gd"
 
 project/assembly_name="3d tutorial"
 
+[editor]
+
+version_control/plugin_name="GitPlugin"
+version_control/autoload_on_startup=true
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/smoothing/plugin.cfg")
