@@ -1,8 +1,6 @@
 extends CharacterBody3D
 
-var multiplayer_id:int
-var main_character:bool
-var is_host:bool
+var default_cam = load("res://scenes/default_camera.tscn")
 
 var typing_in_chat:bool
 
@@ -28,25 +26,46 @@ var cursor_pos:Vector2
 var can_move_cam:bool = false
 var third_person:bool = true
 
-@onready var cam_pivot = $Smoothing/CamPivot
-@onready var camera = $Smoothing/CamPivot/Camera3D
+var cam_pivot:Node3D
+var camera:Camera3D
+var viewmodel_cam:Camera3D
 var hud:CanvasLayer
 var chat_box:LineEdit
+var anim_plr:AnimationTree
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+
+func enter_first_person():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	third_person = false
+	can_move_cam = true
+	viewmodel_cam.visible = true
+	active_sensitivity = FIRSTPRS_SENSITIVITY
+	for i in $Smoothing/MeshInstance3D.get_children():
+		i.visible = false
+
+func exit_first_person():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	third_person = true
+	can_move_cam = false
+	viewmodel_cam.visible = false
+	active_sensitivity = THIRDPRS_SENSITIVITY
+	for i in $Smoothing/MeshInstance3D.get_children():
+		i.visible = true
+
 func _ready():
-	print(hud)
-	$MultiplayerSynchronizer.set_multiplayer_authority(multiplayer_id)
-	if main_character:
-		for i in $Smoothing/MeshInstance3D.get_children():
-			i.visible = false
-		chat_box.focus_entered.connect(_chat_box_focused)
-		chat_box.focus_exited.connect(_chat_box_unfocused)
+	cam_pivot = default_cam.instantiate()
+	$Smoothing.add_child(cam_pivot)
+	camera = cam_pivot.get_node("Camera3D")
+	viewmodel_cam = camera.get_node("ViewmodelViewport/SubViewport/ViewmodelCam")
+	anim_plr = viewmodel_cam.get_child(0).get_node("AnimationTree") as AnimationTree
+	chat_box.focus_entered.connect(_chat_box_focused)
+	chat_box.focus_exited.connect(_chat_box_unfocused)
+	anim_plr["parameters/conditions/idle"] = true
 
 func _unhandled_input(event):
-	if not main_character: return
 	if event is InputEventMouseMotion and can_move_cam:
 		rotate_y(-event.relative.x * active_sensitivity)
 		cam_pivot.rotate_x(-event.relative.y * active_sensitivity)
@@ -54,10 +73,13 @@ func _unhandled_input(event):
 	
 	if event is InputEventMouseButton:
 		match event.button_index:
-			MOUSE_BUTTON_LEFT when not third_person:
+			MOUSE_BUTTON_LEFT when not third_person and event.is_pressed():
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 				can_move_cam = true
 				chat_box.release_focus()
+				anim_plr["parameters/conditions/is_swinging"] = true
+			MOUSE_BUTTON_LEFT when event.is_released():
+				anim_plr["parameters/conditions/is_swinging"] = false
 			MOUSE_BUTTON_LEFT when event.is_pressed():
 				chat_box.release_focus()
 			MOUSE_BUTTON_RIGHT when event.is_pressed():
@@ -69,29 +91,31 @@ func _unhandled_input(event):
 				can_move_cam = false
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 				get_viewport().warp_mouse(cursor_pos)
-			MOUSE_BUTTON_WHEEL_DOWN:
+			MOUSE_BUTTON_WHEEL_DOWN when event.is_pressed():
 				if camera.position.z == 0:
-					Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-					can_move_cam = false
-				camera.position.z += 0.2
-				camera.position.z = clamp(camera.position.z,0,8)
-			MOUSE_BUTTON_WHEEL_UP:
-				camera.position.z -= 0.2
-				camera.position.z = clamp(camera.position.z,0,8)
-				if camera.position.z == 0:
-					Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-					can_move_cam = true
+					exit_first_person()
+					camera.position.z = 0.8
+				else:
+					camera.position.z += 0.2
+					camera.position.z = clamp(camera.position.z,0,8)
+					print("zooming out " + str(camera.position.z))
+			MOUSE_BUTTON_WHEEL_UP when event.is_pressed():
+				if camera.position.z <= 0.85: 
+					enter_first_person()
+					camera.position.z = 0
+				else:
+					camera.position.z -= 0.2
+					camera.position.z = clamp(camera.position.z,0,8)
+					print("zooming in " + str(camera.position.z))
 		
 		if camera.position.z == 0:
 			third_person = false
-			active_sensitivity = FIRSTPRS_SENSITIVITY
 		else:
 			third_person = true
 			active_sensitivity = THIRDPRS_SENSITIVITY
 		
 
 func _input(event):
-	if not main_character: return
 	if typing_in_chat: return
 	if Input.is_action_just_pressed("Esc"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -103,8 +127,10 @@ func _input(event):
 	if Input.is_action_just_released("FocusChat"):
 		chat_box.grab_focus()
 
+func _process(delta):
+	viewmodel_cam.global_transform = camera.global_transform
+
 func _physics_process(delta):
-	if not main_character: return
 	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -144,6 +170,5 @@ func _physics_process(delta):
 
 func _chat_box_focused():
 	typing_in_chat = true
-
 func _chat_box_unfocused():
 	typing_in_chat = false

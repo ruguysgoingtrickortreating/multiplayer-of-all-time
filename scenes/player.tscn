@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dqqxfj3ilgcr1"]
+[gd_scene load_steps=8 format=3 uid="uid://dqqxfj3ilgcr1"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_co8jn"]
 [ext_resource type="Script" path="res://addons/smoothing/smoothing.gd" id="2_b3mam"]
+[ext_resource type="Script" path="res://scenes/player_mpsync_handler.gd" id="4_e4u4n"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ptfmv"]
 
@@ -23,14 +24,6 @@ script = ExtResource("1_co8jn")
 
 [node name="Smoothing" type="Node3D" parent="."]
 script = ExtResource("2_b3mam")
-
-[node name="CamPivot" type="Node3D" parent="Smoothing"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-metadata/_edit_group_ = true
-
-[node name="Camera3D" type="Camera3D" parent="Smoothing/CamPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
-fov = 90.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Smoothing"]
 mesh = SubResource("CapsuleMesh_ptfmv")
@@ -64,3 +57,4 @@ shape = SubResource("CylinderShape3D_fj8ky")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_r0gdr")
+script = ExtResource("4_e4u4n")

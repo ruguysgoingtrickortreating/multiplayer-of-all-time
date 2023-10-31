@@ -18,17 +18,15 @@ func instantiate_player(spawn_location_number:String, player_name:String="", mul
 	player_instance.hud = $HUD
 	player_instance.chat_box = $HUD/TabBar/Chat/ChatBoxContainer/LineEdit
 	if multiplayer_id:
-		player_instance.multiplayer_id = multiplayer_id
+		player_instance.get_node("MultiplayerSynchronizer").multiplayer_id = multiplayer_id
 		var id_label = str(multiplayer_id)
 		if multiplayer_id == 1: 
 			id_label = "1 (HOST)"
-			player_instance.is_host = true
 		if multiplayer_id == 0:
 			id_label = ""
 		player_instance.get_node("Smoothing/IdLabel").text = id_label
-	if not multiplayer_id or multiplayer_id == GameManager.multiplayer_unique_id:
-		player_instance.get_node("Smoothing/CamPivot/Camera3D").current = true
-		player_instance.main_character = true
+	if not multiplayer_id == GameManager.multiplayer_unique_id:
+		player_instance.set_script(null)
 	player_instance.get_node("Smoothing/NameLabel").text = player_name
 	add_child(player_instance)
 	print(str(GameManager.multiplayer_unique_id)+" spawning at "+spawn_location_number)

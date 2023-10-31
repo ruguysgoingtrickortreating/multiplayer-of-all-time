@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://dybmstrrj2ny6"]
+
+[ext_resource type="PackedScene" uid="uid://cns17gd24anpu" path="res://scenes/pickaxe.tscn" id="1_js5vd"]
+
+[node name="ViewmodelViewport" type="SubViewportContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="ViewmodelCam" type="Camera3D" parent="SubViewport"]
+visible = false
+cull_mask = 1047554
+fov = 58.9
+
+[node name="Pickaxe" parent="SubViewport/ViewmodelCam" instance=ExtResource("1_js5vd")]

@@ -1,0 +1,64 @@
+[gd_scene load_steps=12 format=3 uid="uid://cns17gd24anpu"]
+
+[ext_resource type="ArrayMesh" uid="uid://dcrnxrl8mdd5y" path="res://assets/pickaxe/handle.res" id="1_jev0r"]
+[ext_resource type="ArrayMesh" uid="uid://bf027yjbj6cc1" path="res://assets/pickaxe/pick.res" id="2_3sprl"]
+[ext_resource type="Animation" uid="uid://b03jgcucc400r" path="res://assets/pickaxe/idle.res" id="3_nof7m"]
+[ext_resource type="Animation" uid="uid://dbh0r1utmpmqf" path="res://assets/pickaxe/swing.res" id="4_c3pqm"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cqx8r"]
+_data = {
+"idle": ExtResource("3_nof7m"),
+"swing": ExtResource("4_c3pqm")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_50u3v"]
+animation = &"pick_animations/idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hyb02"]
+animation = &"pick_animations/swing"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5aqx1"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ox5e6"]
+advance_mode = 2
+advance_condition = &"is_swinging"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_d3c6c"]
+switch_mode = 2
+advance_mode = 2
+advance_condition = &"idle"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_qwjqa"]
+states/Start/position = Vector2(185.6, 101.606)
+states/pick_animations_idle/node = SubResource("AnimationNodeAnimation_50u3v")
+states/pick_animations_idle/position = Vector2(395.2, 99.824)
+states/pick_animations_swing/node = SubResource("AnimationNodeAnimation_hyb02")
+states/pick_animations_swing/position = Vector2(587.2, 10.8)
+transitions = ["Start", "pick_animations_idle", SubResource("AnimationNodeStateMachineTransition_5aqx1"), "pick_animations_idle", "pick_animations_swing", SubResource("AnimationNodeStateMachineTransition_ox5e6"), "pick_animations_swing", "pick_animations_idle", SubResource("AnimationNodeStateMachineTransition_d3c6c")]
+graph_offset = Vector2(2, -79)
+
+[node name="Pickaxe" type="Node3D"]
+
+[node name="Handle" type="MeshInstance3D" parent="."]
+layers = 2
+mesh = ExtResource("1_jev0r")
+
+[node name="Pick" type="MeshInstance3D" parent="Handle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+layers = 2
+mesh = ExtResource("2_3sprl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"pick_animations": SubResource("AnimationLibrary_cqx8r")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+libraries = {
+"pick_animations": SubResource("AnimationLibrary_cqx8r")
+}
+tree_root = SubResource("AnimationNodeStateMachine_qwjqa")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/idle = false
+parameters/conditions/is_swinging = false

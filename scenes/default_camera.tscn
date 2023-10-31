@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfcwuuaim1n4y"]
+
+[ext_resource type="PackedScene" uid="uid://dybmstrrj2ny6" path="res://scenes/viewmodel_viewport.tscn" id="1_g6knj"]
+
+[node name="CamPivot" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+cull_mask = 1048573
+fov = 90.0
+
+[node name="ViewmodelViewport" parent="Camera3D" instance=ExtResource("1_g6knj")]
