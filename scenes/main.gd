@@ -31,7 +31,3 @@ func instantiate_player(spawn_location_number:String, player_name:String="", mul
 	add_child(player_instance)
 	print(str(GameManager.multiplayer_unique_id)+" spawning at "+spawn_location_number)
 	player_instance.global_position = get_node("SpawnLocations/"+spawn_location_number).position
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

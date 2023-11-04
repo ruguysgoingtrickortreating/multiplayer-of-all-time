@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dvatdkuk16fh0"
-path="res://.godot/imported/cylinder of all time.glb-50af3c4fc20783546c1faa626cb7bf2f.scn"
+uid="uid://bgwf104vafn7d"
+path="res://.godot/imported/player.gltf-6bf14d4837c332e3bdd0340b2f76c9b2.scn"
 
 [deps]
 
-source_file="res://assets/cylinder of all time.glb"
-dest_files=["res://.godot/imported/cylinder of all time.glb-50af3c4fc20783546c1faa626cb7bf2f.scn"]
+source_file="res://player.gltf"
+dest_files=["res://.godot/imported/player.gltf-6bf14d4837c332e3bdd0340b2f76c9b2.scn"]
 
 [params]
 

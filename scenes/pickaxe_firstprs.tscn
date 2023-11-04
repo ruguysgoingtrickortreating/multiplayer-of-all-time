@@ -1,14 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://cns17gd24anpu"]
+[gd_scene load_steps=14 format=3 uid="uid://cns17gd24anpu"]
 
-[ext_resource type="ArrayMesh" uid="uid://dcrnxrl8mdd5y" path="res://assets/pickaxe/handle.res" id="1_jev0r"]
-[ext_resource type="ArrayMesh" uid="uid://bf027yjbj6cc1" path="res://assets/pickaxe/pick.res" id="2_3sprl"]
-[ext_resource type="Animation" uid="uid://b03jgcucc400r" path="res://assets/pickaxe/idle.res" id="3_nof7m"]
-[ext_resource type="Animation" uid="uid://dbh0r1utmpmqf" path="res://assets/pickaxe/swing.res" id="4_c3pqm"]
+[ext_resource type="Script" path="res://scenes/pickaxe.gd" id="1_l3b50"]
+[ext_resource type="ArrayMesh" uid="uid://dcrnxrl8mdd5y" path="res://assets/pickaxe/handle.res" id="2_mnbk4"]
+[ext_resource type="ArrayMesh" uid="uid://bf027yjbj6cc1" path="res://assets/pickaxe/pick.res" id="3_pmn0x"]
+[ext_resource type="Animation" uid="uid://b03jgcucc400r" path="res://assets/pickaxe/idle.res" id="4_88qxo"]
+[ext_resource type="Animation" uid="uid://dbh0r1utmpmqf" path="res://assets/pickaxe/swing.res" id="5_jgdq8"]
+[ext_resource type="AudioStream" uid="uid://di5b6djqje4m1" path="res://assets/pickaxe/Metal hit Sound Effect.mp3" id="6_eucx6"]
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cqx8r"]
 _data = {
-"idle": ExtResource("3_nof7m"),
-"swing": ExtResource("4_c3pqm")
+"idle": ExtResource("4_88qxo"),
+"swing": ExtResource("5_jgdq8")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_50u3v"]
@@ -34,20 +36,22 @@ states/Start/position = Vector2(185.6, 101.606)
 states/pick_animations_idle/node = SubResource("AnimationNodeAnimation_50u3v")
 states/pick_animations_idle/position = Vector2(395.2, 99.824)
 states/pick_animations_swing/node = SubResource("AnimationNodeAnimation_hyb02")
-states/pick_animations_swing/position = Vector2(587.2, 10.8)
+states/pick_animations_swing/position = Vector2(587.2, 11.6)
 transitions = ["Start", "pick_animations_idle", SubResource("AnimationNodeStateMachineTransition_5aqx1"), "pick_animations_idle", "pick_animations_swing", SubResource("AnimationNodeStateMachineTransition_ox5e6"), "pick_animations_swing", "pick_animations_idle", SubResource("AnimationNodeStateMachineTransition_d3c6c")]
 graph_offset = Vector2(2, -79)
 
 [node name="Pickaxe" type="Node3D"]
+script = ExtResource("1_l3b50")
 
 [node name="Handle" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.955956, 0.293512, 3.9854e-08, -0.293512, 0.955956, -6.04815e-09, -3.98739e-08, -5.91586e-09, 1, 0.260508, -0.325169, -0.529877)
 layers = 2
-mesh = ExtResource("1_jev0r")
+mesh = ExtResource("2_mnbk4")
 
 [node name="Pick" type="MeshInstance3D" parent="Handle"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 layers = 2
-mesh = ExtResource("2_3sprl")
+mesh = ExtResource("3_pmn0x")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -62,3 +66,6 @@ tree_root = SubResource("AnimationNodeStateMachine_qwjqa")
 anim_player = NodePath("../AnimationPlayer")
 parameters/conditions/idle = false
 parameters/conditions/is_swinging = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_eucx6")

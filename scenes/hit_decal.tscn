@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://r7ujw7fcssbb"]
+
+[ext_resource type="Texture2D" uid="uid://d2drexidkb3u7" path="res://assets/bullet_hole.webp" id="1_gehpo"]
+[ext_resource type="Script" path="res://scenes/decal_destroy.gd" id="2_ch5m8"]
+
+[node name="HitDecal" type="Decal"]
+size = Vector3(0.2, 0.2, 0.2)
+texture_albedo = ExtResource("1_gehpo")
+script = ExtResource("2_ch5m8")

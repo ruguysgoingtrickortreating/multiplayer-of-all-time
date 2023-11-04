@@ -14,11 +14,6 @@ func addItem(btn):
 	await get_tree().process_frame
 	$ChatBoxContainer/ChatMsgScroll.scroll_vertical = scrollbar.max_value
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
 func _on_line_edit_text_submitted(new_text):
 	if new_text != "":
 		create_chat_msg.rpc(player_name,new_text)

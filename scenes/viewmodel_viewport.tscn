@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dybmstrrj2ny6"]
 
-[ext_resource type="PackedScene" uid="uid://cns17gd24anpu" path="res://scenes/pickaxe.tscn" id="1_js5vd"]
+[ext_resource type="PackedScene" uid="uid://cns17gd24anpu" path="res://scenes/pickaxe_firstprs.tscn" id="1_2uudj"]
 
 [node name="ViewmodelViewport" type="SubViewportContainer"]
 anchors_preset = 15
@@ -21,4 +21,4 @@ visible = false
 cull_mask = 1047554
 fov = 58.9
 
-[node name="Pickaxe" parent="SubViewport/ViewmodelCam" instance=ExtResource("1_js5vd")]
+[node name="Pickaxe" parent="SubViewport/ViewmodelCam" instance=ExtResource("1_2uudj")]

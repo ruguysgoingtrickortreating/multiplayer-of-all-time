@@ -40,9 +40,6 @@ func send_player_info(playername:String, id:int):
 func start_game():
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
 
-func _process(delta):
-	pass
-
 func check_username():
 	$ErrorLog.text = ""
 	if $UsernameTextbox.text == "":
