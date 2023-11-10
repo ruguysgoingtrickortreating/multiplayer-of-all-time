@@ -1,6 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://c3t1xu4h5yue"]
+[gd_scene load_steps=7 format=3 uid="uid://c3t1xu4h5yue"]
 
-[ext_resource type="Script" path="res://MultiplayerController.gd" id="1_pmxeu"]
+[ext_resource type="Script" path="res://scenes/ui/lobby.gd" id="1_faueu"]
+[ext_resource type="PackedScene" uid="uid://b5pn03ie2s68m" path="res://scenes/ui/player_id_panel.tscn" id="2_5243j"]
+[ext_resource type="Script" path="res://scenes/ui/spinning_player_viewport.gd" id="2_johr7"]
+[ext_resource type="PackedScene" uid="uid://cliol2ggmvcm" path="res://scenes/playermodel.tscn" id="3_ghk5j"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ij54d"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_rmpjf"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_ij54d")
 
 [node name="MultiplayerMenu" type="Control"]
 layout_mode = 3
@@ -9,65 +18,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_pmxeu")
-
-[node name="HostButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 73.0
-offset_top = 314.0
-offset_right = 373.0
-offset_bottom = 414.0
-text = "host game"
-
-[node name="JoinButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 780.0
-offset_top = 314.0
-offset_right = 1080.0
-offset_bottom = 414.0
-text = "join game"
-
-[node name="StartButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 429.0
-offset_top = 317.0
-offset_right = 729.0
-offset_bottom = 417.0
-text = "start game in singleplayer
-"
+script = ExtResource("1_faueu")
+player_id_panel = ExtResource("2_5243j")
+metadata/_edit_lock_ = true
 
 [node name="TitleLabel" type="Label" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 18.0
+offset_top = 10.0
+offset_right = 554.0
+offset_bottom = 79.0
 theme_override_font_sizes/font_size = 50
 text = "multiplayer of all time"
-
-[node name="UsernameLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 85.0
-offset_top = 233.0
-offset_right = 256.0
-offset_bottom = 256.0
-text = "username"
-
-[node name="IpLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 436.0
-offset_top = 237.0
-offset_right = 607.0
-offset_bottom = 260.0
-text = "ip address
-"
-
-[node name="PortLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 784.0
-offset_top = 235.0
-offset_right = 955.0
-offset_bottom = 258.0
-text = "port
-"
 
 [node name="WaitingForHostLabel" type="Label" parent="."]
 visible = false
@@ -79,43 +41,191 @@ offset_bottom = 394.0
 theme_override_font_sizes/font_size = 50
 text = "waiting for host to start game"
 
-[node name="ErrorLog" type="Label" parent="."]
+[node name="ConnectUI" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="HostButton" type="Button" parent="ConnectUI"]
 layout_mode = 0
-offset_left = 86.0
-offset_top = 432.0
-offset_right = 1078.0
-offset_bottom = 568.0
+offset_left = 697.0
+offset_top = 483.0
+offset_right = 997.0
+offset_bottom = 583.0
+text = "host game"
+
+[node name="JoinButton" type="Button" parent="ConnectUI"]
+layout_mode = 0
+offset_left = 699.0
+offset_top = 363.0
+offset_right = 999.0
+offset_bottom = 463.0
+text = "join game"
+
+[node name="StartButton" type="Button" parent="ConnectUI"]
+layout_mode = 0
+offset_left = 700.0
+offset_top = 241.0
+offset_right = 1000.0
+offset_bottom = 341.0
+text = "start game in singleplayer
+"
+
+[node name="UsernameTextbox" type="LineEdit" parent="ConnectUI"]
+layout_mode = 0
+offset_left = 706.0
+offset_top = 56.0
+offset_right = 990.0
+offset_bottom = 87.0
+placeholder_text = "robert"
+
+[node name="UsernameLabel" type="Label" parent="ConnectUI/UsernameTextbox"]
+layout_mode = 0
+offset_top = -28.0
+offset_right = 171.0
+offset_bottom = -5.0
+text = "username"
+
+[node name="IpTextbox" type="LineEdit" parent="ConnectUI"]
+layout_mode = 0
+offset_left = 707.0
+offset_top = 121.0
+offset_right = 991.0
+offset_bottom = 152.0
+placeholder_text = "127.0.0.1"
+
+[node name="IpLabel" type="Label" parent="ConnectUI/IpTextbox"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = -24.0
+offset_right = 173.0
+offset_bottom = -1.0
+text = "ip address
+"
+
+[node name="PortTextbox" type="LineEdit" parent="ConnectUI"]
+layout_mode = 0
+offset_left = 705.0
+offset_top = 185.0
+offset_right = 989.0
+offset_bottom = 216.0
+placeholder_text = "12345"
+
+[node name="PortLabel" type="Label" parent="ConnectUI/PortTextbox"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = -25.0
+offset_right = 173.0
+offset_bottom = -2.0
+text = "port
+"
+
+[node name="ErrorLog" type="Label" parent="ConnectUI"]
+layout_mode = 0
+offset_left = 337.0
+offset_top = 476.0
+offset_right = 683.0
+offset_bottom = 612.0
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 25
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="UsernameTextbox" type="LineEdit" parent="."]
-layout_mode = 0
-offset_left = 85.0
-offset_top = 261.0
-offset_right = 369.0
-offset_bottom = 292.0
-placeholder_text = "robert"
+[node name="LobbyUI" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
 
-[node name="IpTextbox" type="LineEdit" parent="."]
-layout_mode = 0
-offset_left = 434.0
-offset_top = 261.0
-offset_right = 718.0
-offset_bottom = 292.0
-placeholder_text = "127.0.0.1"
+[node name="PlayerList" type="ScrollContainer" parent="LobbyUI"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 35.0
+offset_right = 536.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="PortTextbox" type="LineEdit" parent="."]
-layout_mode = 0
-offset_left = 782.0
-offset_top = 260.0
-offset_right = 1066.0
-offset_bottom = 291.0
-placeholder_text = "12345"
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbyUI/PlayerList"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
 
-[connection signal="pressed" from="HostButton" to="." method="_on_host_pressed"]
-[connection signal="pressed" from="JoinButton" to="." method="_on_join_pressed"]
-[connection signal="pressed" from="StartButton" to="." method="_on_start_game_pressed"]
-[connection signal="text_changed" from="IpTextbox" to="." method="_on_ip_textbox_text_changed"]
-[connection signal="text_changed" from="PortTextbox" to="." method="_on_port_textbox_text_changed"]
+[node name="PlayerColorUI" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_lock_ = true
+
+[node name="PlayerColor" type="Label" parent="PlayerColorUI"]
+layout_mode = 2
+offset_left = 45.0
+offset_top = 120.0
+offset_right = 343.0
+offset_bottom = 157.0
+theme_override_font_sizes/font_size = 27
+text = "player color"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorPicker" type="ColorPicker" parent="PlayerColorUI/PlayerColor"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -132.0
+offset_top = 40.0
+offset_right = 132.0
+offset_bottom = 448.0
+grow_horizontal = 2
+edit_alpha = false
+color_mode = 1
+picker_shape = 1
+can_add_swatches = false
+sampler_visible = false
+color_modes_visible = false
+presets_visible = false
+
+[node name="SpinningPlayerContainer" type="SubViewportContainer" parent="PlayerColorUI"]
+layout_mode = 0
+offset_left = 321.0
+offset_top = 143.0
+offset_right = 570.0
+offset_bottom = 477.0
+stretch = true
+
+[node name="SpinningPlayerViewport" type="SubViewport" parent="PlayerColorUI/SpinningPlayerContainer" node_paths=PackedStringArray("color_picker")]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(249, 334)
+render_target_update_mode = 4
+script = ExtResource("2_johr7")
+color_picker = NodePath("../../PlayerColor")
+
+[node name="Camera3D" type="Camera3D" parent="PlayerColorUI/SpinningPlayerContainer/SpinningPlayerViewport"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -2)
+
+[node name="Playermodel" parent="PlayerColorUI/SpinningPlayerContainer/SpinningPlayerViewport" instance=ExtResource("3_ghk5j")]
+mesh = SubResource("CapsuleMesh_rmpjf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="PlayerColorUI/SpinningPlayerContainer/SpinningPlayerViewport"]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[connection signal="pressed" from="ConnectUI/HostButton" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="ConnectUI/JoinButton" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="ConnectUI/StartButton" to="." method="_on_start_game_pressed"]
+[connection signal="text_changed" from="ConnectUI/IpTextbox" to="." method="_on_ip_textbox_text_changed"]
+[connection signal="text_changed" from="ConnectUI/PortTextbox" to="." method="_on_port_textbox_text_changed"]

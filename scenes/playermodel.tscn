@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://cliol2ggmvcm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ij54d"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ptfmv"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_ij54d")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ksm3"]
+albedo_color = Color(0, 0, 0, 1)
+
+[node name="Playermodel" type="MeshInstance3D"]
+mesh = SubResource("CapsuleMesh_ptfmv")
+skeleton = NodePath("../..")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.25729, 0.427934, -0.385342)
+material = SubResource("StandardMaterial3D_8ksm3")
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.257682, 0.4611, -0.414412)
+material = SubResource("StandardMaterial3D_8ksm3")
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="."]
+transform = Transform3D(0.281908, 3.49004e-09, -0.102606, 0.0719303, 0.213938, 0.197627, 0.0731712, -0.21031, 0.201036, -0.00710969, 0.395928, -0.32452)
+rotation_order = 0
+material = SubResource("StandardMaterial3D_8ksm3")

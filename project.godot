@@ -17,7 +17,12 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameManager="*res://GameManager.gd"
+multiplayer_manager="*res://multiplayer_manager.gd"
+rpc_await="*res://addons/rpc-await/rpc_await.gd"
+
+[display]
+
+window/stretch/mode="canvas_items"
 
 [dotnet]
 
@@ -30,7 +35,7 @@ version_control/autoload_on_startup=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/smoothing/plugin.cfg")
+enabled=PackedStringArray("res://addons/rpc-await/plugin.cfg", "res://addons/smoothing/plugin.cfg")
 
 [input]
 

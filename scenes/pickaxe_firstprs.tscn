@@ -44,7 +44,7 @@ graph_offset = Vector2(2, -79)
 script = ExtResource("1_l3b50")
 
 [node name="Handle" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.955956, 0.293512, 3.9854e-08, -0.293512, 0.955956, -6.04815e-09, -3.98739e-08, -5.91586e-09, 1, 0.260508, -0.325169, -0.529877)
+transform = Transform3D(0.955403, 0.295308, 3.93261e-08, -0.295308, 0.955403, -5.88408e-09, -3.93099e-08, -5.99165e-09, 1, 0.260508, -0.322661, -0.529877)
 layers = 2
 mesh = ExtResource("2_mnbk4")
 

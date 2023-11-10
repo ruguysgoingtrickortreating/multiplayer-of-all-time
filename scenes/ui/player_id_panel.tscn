@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5pn03ie2s68m"]
+
+[ext_resource type="Script" path="res://scenes/ui/remote_player_panel.gd" id="1_sfggd"]
+[ext_resource type="PackedScene" uid="uid://cliol2ggmvcm" path="res://scenes/playermodel.tscn" id="1_txmwr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ij54d"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7y76o"]
+resource_local_to_scene = true
+lightmap_size_hint = Vector2i(17, 14)
+material = SubResource("StandardMaterial3D_ij54d")
+
+[node name="PlayerIDPanel" type="Panel"]
+custom_minimum_size = Vector2(500, 100)
+script = ExtResource("1_sfggd")
+
+[node name="SpinningPlayerContainer" type="SubViewportContainer" parent="."]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
+stretch = true
+
+[node name="SpinningPlayerViewport" type="SubViewport" parent="SpinningPlayerContainer"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(100, 100)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SpinningPlayerContainer/SpinningPlayerViewport"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -2)
+
+[node name="Playermodel" parent="SpinningPlayerContainer/SpinningPlayerViewport" instance=ExtResource("1_txmwr")]
+transform = Transform3D(0.87625, -0.243948, -0.415541, 0.182558, 0.966159, -0.182236, 0.445935, 0.0838237, 0.891132, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_7y76o")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SpinningPlayerContainer/SpinningPlayerViewport"]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="PlayerNameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 100.0
+offset_right = 500.0
+offset_bottom = 100.0
+theme_override_font_sizes/font_size = 27
+text = "player name here"
+vertical_alignment = 1
+autowrap_mode = 3
