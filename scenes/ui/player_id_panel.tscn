@@ -1,18 +1,19 @@
 [gd_scene load_steps=5 format=3 uid="uid://b5pn03ie2s68m"]
 
-[ext_resource type="Script" path="res://scenes/ui/remote_player_panel.gd" id="1_sfggd"]
+[ext_resource type="Script" path="res://scenes/ui/player_panel.gd" id="1_tnnt7"]
 [ext_resource type="PackedScene" uid="uid://cliol2ggmvcm" path="res://scenes/playermodel.tscn" id="1_txmwr"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ij54d"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pjsq4"]
+resource_local_to_scene = true
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_7y76o"]
 resource_local_to_scene = true
 lightmap_size_hint = Vector2i(17, 14)
-material = SubResource("StandardMaterial3D_ij54d")
+material = SubResource("StandardMaterial3D_pjsq4")
 
-[node name="PlayerIDPanel" type="Panel"]
+[node name="PlayerPanel" type="Panel"]
 custom_minimum_size = Vector2(500, 100)
-script = ExtResource("1_sfggd")
+script = ExtResource("1_tnnt7")
 
 [node name="SpinningPlayerContainer" type="SubViewportContainer" parent="."]
 layout_mode = 0

@@ -1,54 +1,61 @@
 extends Control
 
-var ip_addr:String = ""
-var port:int
+@onready var player_preview:SubViewport = $PlayerColorUI/SpinningPlayerContainer/SpinningPlayerViewport
+@onready var color_picker_label:Label = $PlayerColorUI/PlayerColor
+#@onready var color_picker:ColorPicker = color_picker_label.get_node("ColorPicker")
 @export var player_id_panel:PackedScene
 
 const DEFAULT_IP:String = "127.0.0.1"
 const DEFAULT_PORT:int = 12345
 
+var ip_addr:String = DEFAULT_IP
+var port:int = DEFAULT_PORT
+
 var self_added:bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	player_preview.get_node("Playermodel").rotation_degrees = Vector3(15,0,0)
 	multiplayer_manager.player_added.connect(player_connected)
 	multiplayer.peer_disconnected.connect(player_disconnected)
-	multiplayer.connected_to_server.connect(connected_to_server)
+	multiplayer_manager.connection_succeeded.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)
 
-func player_connected(id): #Server and Client
-	var panel = player_id_panel.instantiate()
-	panel.name = str(id)
-	panel.get_node("PlayerNameLabel").text = multiplayer_manager.players[id].name + (" (host)" if id == 1 else "")
-	$LobbyUI/PlayerList/VBoxContainer.add_child(panel)
-	if not multiplayer_manager.player_count:
-		await multiplayer_manager.player_count_sent
-	if multiplayer_manager.players.size() >= multiplayer_manager.player_count and not self_added:
-		add_self_playerlist()
+func _process(delta):
+	player_preview.get_node("Playermodel").rotation.y += 1 * delta
 
-func add_self_playerlist():
-	var id = multiplayer_manager.peer.get_unique_id()
+func add_to_playerlist(id):
 	var panel = player_id_panel.instantiate()
 	panel.name = str(id)
-	panel.get_node("PlayerNameLabel").text = multiplayer_manager.local_name + (" (host/you)" if id == 1 else " (you)")
-	panel.set_script(load("res://scenes/ui/local_player_panel.gd"))
-	panel.color_picker = $PlayerColorUI/PlayerColor/ColorPicker
+	panel.id = id
+	panel.get_node("PlayerNameLabel").text = multiplayer_manager.players[id].name + \
+	(" (host/you)" if id == 1 and multiplayer_manager.peer.get_unique_id() == 1
+	else " (you)" if id == multiplayer_manager.peer.get_unique_id()
+	else " (host)" if id == 1
+	else "")
 	$LobbyUI/PlayerList/VBoxContainer.add_child(panel)
-	self_added = true
+
+func _color_picker_changed(color:Color):
+	player_preview.get_node("Playermodel").mesh.material.albedo_color = color
+	color_picker_label.add_theme_color_override("font_color",color)
+	multiplayer_manager.local_color = color
+	if multiplayer_manager.peer: multiplayer_manager.change_player_color.rpc(color)
+
+func player_connected(id):
+	print("player connected " + str(id))
+	add_to_playerlist(id)
 
 func player_disconnected(id): #Server and Client
 	print("Player Disconnected: "+str(id))
 
 func connected_to_server(): #Clients
-	pass
-	#print("Connected to server")
+	for id in multiplayer_manager.players:
+		add_to_playerlist(id)
 
 func connection_failed(): #Clients
 	push_warning("Failed to connect: "+str(self))
 
-#@rpc("any_peer","call_local")
-#func start_game():
-	#get_tree().change_scene_to_file("res://scenes/main.tscn")
+
 
 func check_username():
 	$ConnectUI/ErrorLog.text = ""
@@ -60,7 +67,7 @@ func check_username():
 func _on_host_pressed():
 	if not check_username(): return
 	
-	var error = multiplayer_manager.create_server(port if port else DEFAULT_PORT,$ConnectUI/UsernameTextbox.text)
+	var error = multiplayer_manager.create_server(port,$ConnectUI/UsernameTextbox.text)
 	var error_name:String
 	match error:
 		0:
@@ -72,14 +79,14 @@ func _on_host_pressed():
 	$ConnectUI/ErrorLog.text = "hosting status: "+error_name
 	if error != OK: return
 	
-	add_self_playerlist()
+	#add_self_playerlist()
 	$ConnectUI.visible = false
 	$LobbyUI.visible = true
 
 func _on_join_pressed():
 	if not check_username(): return
 	
-	var error = multiplayer_manager.create_client(ip_addr if ip_addr else DEFAULT_IP, port if port else DEFAULT_PORT,$ConnectUI/UsernameTextbox.text)
+	var error = multiplayer_manager.create_client(ip_addr,port,$ConnectUI/UsernameTextbox.text)
 	var error_name:String
 	match error:
 		0:
@@ -96,8 +103,10 @@ func _on_join_pressed():
 	$LobbyUI.visible = true
 
 
-func _on_start_game_pressed():
-	pass
+func _on_start_game_singleplayer_pressed():
+	multiplayer_manager.create_singleplayer($ConnectUI/UsernameTextbox.text)
+	$ConnectUI.visible = false
+	$LobbyUI.visible = true
 	#if peer:
 		#start_game.rpc()
 	#else:
@@ -108,7 +117,7 @@ func _on_start_game_pressed():
 		#start_game()
 
 func _on_ip_textbox_text_changed(new_text):
-	ip_addr = new_text
+	ip_addr = new_text if new_text else DEFAULT_IP
 
 func _on_port_textbox_text_changed(new_text):
-	port = int(new_text)
+	port = int(new_text) if new_text else DEFAULT_PORT

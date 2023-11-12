@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://c3t1xu4h5yue"]
+[gd_scene load_steps=6 format=3 uid="uid://c3t1xu4h5yue"]
 
 [ext_resource type="Script" path="res://scenes/ui/lobby.gd" id="1_faueu"]
 [ext_resource type="PackedScene" uid="uid://b5pn03ie2s68m" path="res://scenes/ui/player_id_panel.tscn" id="2_5243j"]
-[ext_resource type="Script" path="res://scenes/ui/spinning_player_viewport.gd" id="2_johr7"]
 [ext_resource type="PackedScene" uid="uid://cliol2ggmvcm" path="res://scenes/playermodel.tscn" id="3_ghk5j"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ij54d"]
@@ -66,7 +65,7 @@ offset_right = 999.0
 offset_bottom = 463.0
 text = "join game"
 
-[node name="StartButton" type="Button" parent="ConnectUI"]
+[node name="SingleplayerButton" type="Button" parent="ConnectUI"]
 layout_mode = 0
 offset_left = 700.0
 offset_top = 241.0
@@ -205,14 +204,12 @@ offset_right = 570.0
 offset_bottom = 477.0
 stretch = true
 
-[node name="SpinningPlayerViewport" type="SubViewport" parent="PlayerColorUI/SpinningPlayerContainer" node_paths=PackedStringArray("color_picker")]
+[node name="SpinningPlayerViewport" type="SubViewport" parent="PlayerColorUI/SpinningPlayerContainer"]
 own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(249, 334)
 render_target_update_mode = 4
-script = ExtResource("2_johr7")
-color_picker = NodePath("../../PlayerColor")
 
 [node name="Camera3D" type="Camera3D" parent="PlayerColorUI/SpinningPlayerContainer/SpinningPlayerViewport"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -2)
@@ -226,6 +223,7 @@ shadow_enabled = true
 
 [connection signal="pressed" from="ConnectUI/HostButton" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="ConnectUI/JoinButton" to="." method="_on_join_pressed"]
-[connection signal="pressed" from="ConnectUI/StartButton" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="ConnectUI/SingleplayerButton" to="." method="_on_start_game_singleplayer_pressed"]
 [connection signal="text_changed" from="ConnectUI/IpTextbox" to="." method="_on_ip_textbox_text_changed"]
 [connection signal="text_changed" from="ConnectUI/PortTextbox" to="." method="_on_port_textbox_text_changed"]
+[connection signal="color_changed" from="PlayerColorUI/PlayerColor/ColorPicker" to="." method="_color_picker_changed"]
