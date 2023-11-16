@@ -12,6 +12,7 @@ var peer:ENetMultiplayerPeer
 var local_name:String
 var player_count:int
 var local_color:Color = Color(1,1,1,1)
+var singleplayer:bool
 
 
 func create_server(port:int, plr_name:String):
@@ -95,6 +96,9 @@ func _connection_failed():
 	players = player_list
 	print(str(players))
 	connection_succeeded.emit()
+
+@rpc("authority","call_local","reliable") func start_game():
+	get_tree().change_scene_to_file("res://scenes/main.tscn")
 
 #@rpc("any_peer") func _register_player_info(plr_name:String): #OUTDATED!!!!! DEPRECATED AND STUFF!!!!
 	#var id = multiplayer.get_remote_sender_id()

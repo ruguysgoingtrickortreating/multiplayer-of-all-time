@@ -79,7 +79,9 @@ func _on_host_pressed():
 	$ConnectUI/ErrorLog.text = "hosting status: "+error_name
 	if error != OK: return
 	
-	#add_self_playerlist()
+	$LobbyUI/PlayerListBackgroundPanel.size.y = 500
+	$LobbyUI/PlayerList.size.y = 480
+	$LobbyUI/StartButton.visible = true
 	$ConnectUI.visible = false
 	$LobbyUI.visible = true
 
@@ -105,8 +107,7 @@ func _on_join_pressed():
 
 func _on_start_game_singleplayer_pressed():
 	multiplayer_manager.create_singleplayer($ConnectUI/UsernameTextbox.text)
-	$ConnectUI.visible = false
-	$LobbyUI.visible = true
+	multiplayer_manager.start_game.rpc()
 	#if peer:
 		#start_game.rpc()
 	#else:
@@ -115,6 +116,9 @@ func _on_start_game_singleplayer_pressed():
 			#$ErrorLog.text = "no username entered"
 			#return false
 		#start_game()
+
+func _on_start_pressed():
+	multiplayer_manager.start_game.rpc()
 
 func _on_ip_textbox_text_changed(new_text):
 	ip_addr = new_text if new_text else DEFAULT_IP

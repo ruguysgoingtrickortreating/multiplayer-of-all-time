@@ -31,9 +31,9 @@ var camera:Camera3D
 var viewmodel_cam:Camera3D
 var hud:CanvasLayer
 var chat_box:LineEdit
-var item:Node3D
-var anim_plr:AnimationTree
-@onready var anim_plr_3prs:AnimationTree = $Smoothing/MeshInstance3D/Pickaxe/AnimationTree
+#var item:Node3D
+#var anim_plr:AnimationTree
+#@onready var anim_plr_3prs:AnimationTree = $Smoothing/MeshInstance3D/Pickaxe/AnimationTree
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -60,7 +60,7 @@ func exit_first_person():
 func swung_peak():
 	var raycast:RayCast3D = camera.get_node("RayCast3D") as RayCast3D
 	if not raycast.is_colliding(): return
-	item.get_node("AudioStreamPlayer").play()
+	#item.get_node("AudioStreamPlayer").play()
 	var decal = load("res://scenes/hit_decal.tscn").instantiate() as Decal
 	get_tree().root.add_child(decal)
 	decal.global_position = raycast.get_collision_point()
@@ -75,12 +75,12 @@ func _ready():
 	$Smoothing.add_child(cam_pivot)
 	camera = cam_pivot.get_node("Camera3D")
 	viewmodel_cam = camera.get_node("ViewmodelViewport/SubViewport/ViewmodelCam")
-	item = viewmodel_cam.get_child(0)
-	anim_plr = item.get_node("AnimationTree") as AnimationTree
+	#item = viewmodel_cam.get_child(0)
+	#anim_plr = item.get_node("AnimationTree") as AnimationTree
 	chat_box.focus_entered.connect(_chat_box_focused)
 	chat_box.focus_exited.connect(_chat_box_unfocused)
-	anim_plr["parameters/conditions/idle"] = true
-	item.swung.connect(swung_peak)
+	#anim_plr["parameters/conditions/idle"] = true
+	#item.swung.connect(swung_peak)
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion and can_move_cam:
@@ -95,11 +95,12 @@ func _unhandled_input(event):
 					Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 					can_move_cam = true
 				chat_box.release_focus()
-				anim_plr["parameters/conditions/is_swinging"] = true
-				anim_plr_3prs["parameters/conditions/is_swinging"] = true
+				#anim_plr["parameters/conditions/is_swinging"] = true
+				#anim_plr_3prs["parameters/conditions/is_swinging"] = true
 			MOUSE_BUTTON_LEFT when event.is_released():
-				anim_plr["parameters/conditions/is_swinging"] = false
-				anim_plr_3prs["parameters/conditions/is_swinging"] = false
+				pass
+				#anim_plr["parameters/conditions/is_swinging"] = false
+				#anim_plr_3prs["parameters/conditions/is_swinging"] = false
 			MOUSE_BUTTON_LEFT when event.is_pressed():
 				chat_box.release_focus()
 			MOUSE_BUTTON_RIGHT when event.is_pressed():
@@ -147,8 +148,8 @@ func _input(_event):
 	if Input.is_action_just_released("FocusChat"):
 		chat_box.grab_focus()
 
-func _process(_delta):
-	viewmodel_cam.global_transform = camera.global_transform
+#func _process(_delta):
+	#viewmodel_cam.global_transform = camera.global_transform
 
 func _physics_process(delta):
 	

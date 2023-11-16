@@ -1,7 +1,7 @@
 extends PanelContainer
 
-@onready var player_id = GameManager.multiplayer_unique_id
-@onready var player_name:String = GameManager.players[player_id].name
+@onready var player_id = multiplayer_manager.peer.get_unique_id()
+@onready var player_name:String = multiplayer_manager.local_name
 @onready var vbox = $ChatBoxContainer/ChatMsgScroll/ChatMsgContainer
 @onready var scrollbar = $ChatBoxContainer/ChatMsgScroll.get_v_scroll_bar()
 @export var message_scene:PackedScene
