@@ -1,9 +1,11 @@
 extends Node
 
 signal player_added
-signal player_disconnected
+signal player_removed
 signal connection_succeeded
 signal connection_failed
+signal server_disconnected
+signal self_disconnected
 signal player_count_sent
 signal player_color_changed
 
@@ -47,13 +49,20 @@ func create_singleplayer(plr_name:String):
 	_register_new_player(local_name,local_color)
 	return error
 
+func leave_game():
+	multiplayer.multiplayer_peer.close()
+	players.clear()
+	singleplayer = false
+	self_disconnected.emit()
+
 func _player_connected(id:int):
 	pass
 	#_register_player_info.rpc_id(id,local_name)
 	#print(local_name + " player connected registering info")
 
 func _player_disconnected(id:int):
-	pass
+	print("player disconnected: " + str(id))
+	_remove_player(id)
 
 func _connection_succeeded():
 	print(str(local_color))
@@ -63,6 +72,10 @@ func _connection_succeeded():
 func _connection_failed():
 	connection_failed.emit()
 	multiplayer.set_peer(null)
+
+func _server_disconnected():
+	print("server disconnected")
+	server_disconnected.emit()
 
 @rpc("any_peer","reliable") func _register_new_player(plr_name:String,color:Color):
 	
@@ -84,6 +97,10 @@ func _connection_failed():
 	_send_new_player.rpc(id,players[id])
 	_send_player_list.rpc_id(id,players)
 	player_added.emit(id)
+
+@rpc("authority","reliable") func _remove_player(id:int):
+	player_removed.emit(id,players[id].name)
+	players.erase(id)
 
 @rpc("authority","reliable") func _send_new_player(id:int,new_entry:Dictionary):
 	if peer.get_unique_id() == id: return
@@ -130,3 +147,4 @@ func _ready():
 	multiplayer.peer_disconnected.connect(_player_disconnected)
 	multiplayer.connected_to_server.connect(_connection_succeeded)
 	multiplayer.connection_failed.connect(_connection_failed)
+	multiplayer.server_disconnected.connect(_server_disconnected)

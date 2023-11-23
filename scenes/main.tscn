@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://dtfa1q1whsnee"]
+[gd_scene load_steps=15 format=3 uid="uid://dtfa1q1whsnee"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_hxc4f"]
 [ext_resource type="PackedScene" uid="uid://dqqxfj3ilgcr1" path="res://scenes/player.tscn" id="1_xnksl"]
 [ext_resource type="PackedScene" uid="uid://d11of5phfrwri" path="res://scenes/ui/hud.tscn" id="3_3a0ey"]
+[ext_resource type="Script" path="res://scenes/box_that_closes_your_game.gd" id="3_l41gw"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yae5s"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -32,6 +33,10 @@ albedo_color = Color(0.12549, 0.611765, 0.0470588, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4cpoq"]
 albedo_color = Color(0.0666667, 0.0470588, 0.611765, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nkdv3"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0.5)
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_hxc4f")
@@ -105,6 +110,84 @@ surface_material_override/0 = SubResource("StandardMaterial3D_4cpoq")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EnvironmentObjects/MeshInstance3D2/StaticBody3D"]
 shape = SubResource("BoxShape3D_x6a3q")
 
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="EnvironmentObjects"]
+transform = Transform3D(2.4, 0, 0, 0, 0.5, 0, 0, 0, 2.4, 1, 3.8, -6)
+mesh = SubResource("BoxMesh_0yaxg")
+surface_material_override/0 = SubResource("StandardMaterial3D_luvdc")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="EnvironmentObjects/MeshInstance3D4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnvironmentObjects/MeshInstance3D4/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_x6a3q")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="EnvironmentObjects"]
+transform = Transform3D(2.4, 0, 0, 0, 0.5, 0, 0, 0, 2.4, -5, 3.8, -6)
+mesh = SubResource("BoxMesh_0yaxg")
+surface_material_override/0 = SubResource("StandardMaterial3D_4ux54")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="EnvironmentObjects/MeshInstance3D5"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnvironmentObjects/MeshInstance3D5/StaticBody3D"]
+shape = SubResource("BoxShape3D_x6a3q")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="EnvironmentObjects"]
+transform = Transform3D(2.4, 0, 0, 0, 0.5, 0, 0, 0, 2.4, -9, 3.8, -1)
+mesh = SubResource("BoxMesh_0yaxg")
+surface_material_override/0 = SubResource("StandardMaterial3D_4cpoq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="EnvironmentObjects/MeshInstance3D6"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnvironmentObjects/MeshInstance3D6/StaticBody3D"]
+shape = SubResource("BoxShape3D_x6a3q")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="EnvironmentObjects"]
+transform = Transform3D(2.4, 0, 0, 0, 0.5, 0, 0, 0, 2.4, -9, 4.8, 4)
+mesh = SubResource("BoxMesh_0yaxg")
+surface_material_override/0 = SubResource("StandardMaterial3D_luvdc")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="EnvironmentObjects/MeshInstance3D7"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnvironmentObjects/MeshInstance3D7/StaticBody3D"]
+shape = SubResource("BoxShape3D_x6a3q")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="EnvironmentObjects"]
+transform = Transform3D(2.4, 0, 0, 0, 0.5, 0, 0, 0, 2.4, -6, 5.8, 7)
+mesh = SubResource("BoxMesh_0yaxg")
+surface_material_override/0 = SubResource("StandardMaterial3D_4ux54")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="EnvironmentObjects/MeshInstance3D9"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnvironmentObjects/MeshInstance3D9/StaticBody3D"]
+shape = SubResource("BoxShape3D_x6a3q")
+
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="EnvironmentObjects"]
+transform = Transform3D(4.8, 0, 0, 0, 0.5, 0, 0, 0, 2.4, -0.6, 6.8, 7)
+mesh = SubResource("BoxMesh_0yaxg")
+surface_material_override/0 = SubResource("StandardMaterial3D_4cpoq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="EnvironmentObjects/MeshInstance3D10"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnvironmentObjects/MeshInstance3D10/StaticBody3D"]
+shape = SubResource("BoxShape3D_x6a3q")
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="EnvironmentObjects"]
+transform = Transform3D(2.4, 0, 0, 0, 2.4, 0, 0, 0, 2.4, 0.6, 8.25, 7)
+mesh = SubResource("BoxMesh_0yaxg")
+surface_material_override/0 = SubResource("StandardMaterial3D_nkdv3")
+
+[node name="Area3D" type="Area3D" parent="EnvironmentObjects/MeshInstance3D11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("3_l41gw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnvironmentObjects/MeshInstance3D11/Area3D"]
+shape = SubResource("BoxShape3D_x6a3q")
+
+[node name="Label3D" type="Label3D" parent="EnvironmentObjects/MeshInstance3D11"]
+transform = Transform3D(-2.09815e-08, 0, -2.4, 0, 0.5, 0, 0.48, 0, -1.04907e-07, -0.5, 0, 0)
+text = "box that closes your game
+"
+
 [node name="SpawnLocations" type="Node3D" parent="."]
 
 [node name="1" type="Node3D" parent="SpawnLocations"]
@@ -120,3 +203,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.8, 2)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.8, -3)
 
 [node name="HUD" parent="." instance=ExtResource("3_3a0ey")]
+
+[connection signal="body_entered" from="EnvironmentObjects/MeshInstance3D11/Area3D" to="EnvironmentObjects/MeshInstance3D11/Area3D" method="_on_body_entered"]

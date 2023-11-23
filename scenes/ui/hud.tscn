@@ -34,4 +34,22 @@ script = ExtResource("1_n1qi4")
 custom_minimum_size = Vector2(400, 250)
 layout_mode = 2
 
+[node name="DisconnectedPanel" type="Panel" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="DisconnectedPanel"]
+layout_mode = 0
+offset_left = 264.0
+offset_top = 340.0
+offset_right = 1013.0
+offset_bottom = 553.0
+theme_override_font_sizes/font_size = 50
+text = "you were disconnected mcdonalds wifi lookin"
+autowrap_mode = 3
+
 [connection signal="tab_clicked" from="TabBar" to="TabBar" method="_on_tab_clicked"]

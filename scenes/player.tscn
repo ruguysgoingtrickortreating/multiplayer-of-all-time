@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://dqqxfj3ilgcr1"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_nsnou"]
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_nsnou"]
 [ext_resource type="Script" path="res://addons/smoothing/smoothing.gd" id="2_b3mam"]
 [ext_resource type="PackedScene" uid="uid://cliol2ggmvcm" path="res://scenes/playermodel.tscn" id="3_s8o5p"]
 [ext_resource type="Script" path="res://scenes/player_mpsync_handler.gd" id="4_e4u4n"]
@@ -22,9 +22,6 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath("Smoothing/MeshInstance3D/Pickaxe/AnimationPlayer:current_animation")
-properties/2/spawn = false
-properties/2/replication_mode = 2
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_nsnou")
