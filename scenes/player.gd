@@ -17,14 +17,14 @@ const BOB_FREQ = 2
 const BOB_AMP = 0.05
 var bob_progress: float
 
-const BASE_FOV = 90.0
-const RUN_FOV = 2
-const FIRSTPRS_SENSITIVITY = .002
-const THIRDPRS_SENSITIVITY = .0035
-var active_sensitivity = THIRDPRS_SENSITIVITY
-var cursor_pos:Vector2
-var can_move_cam:bool = false
-var third_person:bool = true
+#const BASE_FOV = 90.0
+#const RUN_FOV = 2
+#const FIRSTPRS_SENSITIVITY = .002
+#const THIRDPRS_SENSITIVITY = .0035
+#var active_sensitivity = THIRDPRS_SENSITIVITY
+#var cursor_pos:Vector2
+#var can_move_cam:bool = false
+#var third_person:bool = true
 
 var cam_pivot:Node3D
 var camera:Camera3D

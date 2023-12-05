@@ -24,11 +24,11 @@ func _player_removed(id,plrname):
 
 func instantiate_player(spawn_location_number:String, player_name:String, multiplayer_id:int):
 	var player_instance = player_scene.instantiate() as CharacterBody3D
-	if multiplayer_id != multiplayer_manager.peer.get_unique_id():
-		player_instance.set_script(null)
-	else:
-		player_instance.hud = $HUD
-		player_instance.chat_box = $HUD/TabBar/Chat/ChatBoxContainer/LineEdit
+	if multiplayer_id == multiplayer_manager.peer.get_unique_id():
+		var input_handler = player_instance.get_node("InputHandler")
+		input_handler.hud = $HUD
+		input_handler.chat_box = $HUD/TabBar/Chat/ChatBoxContainer/LineEdit
+		input_handler.cam_pivot = $CamSmoother/CamPivot
 	player_instance.get_node("MultiplayerSynchronizer").multiplayer_id = multiplayer_id
 	player_instance.name = str(multiplayer_id)
 	var id_label = str(multiplayer_id)
